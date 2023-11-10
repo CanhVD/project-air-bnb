@@ -1,5 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import Rooms from "../views/Rooms.vue";
+import RoomDetail from "../views/RoomDetail.vue"
+import Booking from "../views/Booking.vue"
+import Login from "../views/Login.vue"
+import SignUp from "../views/SignUp.vue"
 
 const routes = [
   {
@@ -7,6 +12,32 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+  {
+    path: '/rooms',
+    name: 'rooms',
+    component: Rooms
+  },
+  {
+    path: '/room-detail/:roomId',
+    name: 'room-detail',
+    component: RoomDetail
+  },
+  {
+    path: '/booking',
+    name: 'Booking',
+    component: Booking
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp
+  },
+
   {
     path: '/about',
     name: 'about',

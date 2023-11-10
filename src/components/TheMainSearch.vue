@@ -8,14 +8,20 @@
   <a href="#"><i class="fa fa-map-marker"></i></a>
 </div>
 
-<button class="button" onclick="window.location.href='listings-half-screen-map-list.html'">Search</button>
+<button class="button" @click="handleSearch">Search</button>
+<!-- <router-link class="button"  :to="{ name: 'room-detail', params: { roomId: 'abc' } }">Search</router-link> -->
 
 </div>
 </template>
 
 <script lang="js">
+import router from "../router";
 export default {
-
+  methods:{
+    handleSearch(){
+      router.push('/rooms')
+    }
+  }
 }
 </script>
 

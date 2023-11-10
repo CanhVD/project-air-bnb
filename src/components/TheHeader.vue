@@ -8,7 +8,7 @@
       
       <!-- Logo -->
       <div id="logo">
-        <a href="index.html"><img src="images/logo.png" alt=""></a>
+        <router-link  to="/"><img src="images/logo.png" alt=""></router-link>
       </div>
 
       <!-- Mobile Navigation -->
