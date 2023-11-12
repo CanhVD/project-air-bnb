@@ -59,27 +59,26 @@
 
 
 			<div class="row">
-
 				<!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
+				<div class="col-lg-12 col-md-12" v-for="(room, index) in listRoom" :key="index">
 					<div class="listing-item-container list-layout">
-						<router-link to="room-detail/abc" class="listing-item">
+						<router-link :to="{ name: 'room-detail', params: { roomId: 'abc' } }" class="listing-item">
 							
 							<!-- Image -->
 							<div class="listing-item-image">
-								<img src="images/listing-item-01.jpg" alt="">
-								<span class="tag">Eat & Drink</span>
+								<img :src="room.image" :alt="room.roomName">
+								<span class="tag">{{ room.price }}</span>
 							</div>
 							
 							<!-- Content -->
 							<div class="listing-item-content">
-								<div class="listing-badge now-open">Now Open</div>
+								<div class="listing-badge now-open">{{room.tag}}</div>
 
 								<div class="listing-item-inner">
-									<h3>Tom's Restaurant <i class="verified-icon"></i></h3>
+									<h3>{{room.roomName}} <i class="verified-icon"></i></h3>
 									<span>964 School Street, New York</span>
 									<div class="star-rating" data-rating="3.5">
-										<div class="rating-counter">(12 reviews)</div>
+										<div class="rating-counter">({{ room.views }} reviews)</div>
 									</div>
 								</div>
 
@@ -89,158 +88,6 @@
 					</div>
 				</div>
 				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout">
-						<a href="listings-single-page.html" class="listing-item">
-							
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="images/listing-item-02.jpg" alt="">
-								<span class="tag">Events</span>
-							</div>
-							
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-								<h3>Sticky Band</h3>
-								<span>Bishop Avenue, New York</span>
-									<div class="star-rating" data-rating="5.0">
-										<div class="rating-counter">(23 reviews)</div>
-									</div>
-								</div>
-
-								<span class="like-icon"></span>
-
-								<div class="listing-item-details">Friday, August 10</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout">
-						<a href="listings-single-page.html" class="listing-item">
-							
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="images/listing-item-03.jpg" alt="">
-								<span class="tag">Hotels</span>
-							</div>
-							
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-								<h3>Hotel Govendor</h3>
-								<span>778 Country Street, New York</span>
-									<div class="star-rating" data-rating="2.0">
-										<div class="rating-counter">(17 reviews)</div>
-									</div>
-								</div>
-
-								<span class="like-icon"></span>
-
-								<div class="listing-item-details">Starting from $59 per night</div>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout">
-						<a href="listings-single-page.html" class="listing-item">
-							
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="images/listing-item-04.jpg" alt="">
-								<span class="tag">Eat & Drink</span>
-							</div>
-							
-							<!-- Content -->
-							<div class="listing-item-content">
-								<div class="listing-badge now-open">Now Open</div>
-								
-								<div class="listing-item-inner">
-								<h3>Burger House <i class="verified-icon"></i></h3>
-								<span>2726 Shinn Street, New York</span>
-									<div class="star-rating" data-rating="5.0">
-										<div class="rating-counter">(31 reviews)</div>
-									</div>
-								</div>
-
-								<span class="like-icon"></span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout">
-						<a href="listings-single-page.html" class="listing-item">
-							
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="images/listing-item-05.jpg" alt="">
-								<span class="tag">Other</span>
-							</div>
-							
-							<!-- Content -->
-							<div class="listing-item-content">
-
-								<div class="listing-item-inner">
-								<h3>Airport</h3>
-								<span>1512 Duncan Avenue, New York</span>
-									<div class="star-rating" data-rating="3.5">
-										<div class="rating-counter">(46 reviews)</div>
-									</div>
-								</div>
-
-								<span class="like-icon"></span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
-				<!-- Listing Item -->
-				<div class="col-lg-12 col-md-12">
-					<div class="listing-item-container list-layout">
-						<a href="listings-single-page.html" class="listing-item">
-							
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img src="images/listing-item-06.jpg" alt="">
-								<span class="tag">Eat & Drink</span>
-							</div>
-							
-							<!-- Content -->
-							<div class="listing-item-content">
-								<div class="listing-badge now-closed">Now Closed</div>
-
-								<div class="listing-item-inner">
-								<h3>Think Coffee</h3>
-								<span>215 Terry Lane, New York</span>
-									<div class="star-rating" data-rating="5.0">
-										<div class="rating-counter">(31 reviews)</div>
-									</div>
-								</div>
-
-								<span class="like-icon"></span>
-							</div>
-						</a>
-					</div>
-				</div>
-				<!-- Listing Item / End -->
-
 			</div>
 
 			<!-- Pagination -->
@@ -263,7 +110,6 @@
 			<!-- Pagination / End -->
 
 		</div>
-
 
 		<!-- Sidebar
 		================================================== -->
@@ -299,7 +145,6 @@
 						</div>
 					</div>
 					<!-- Row / End -->
-
 
 					<!-- Row -->
 					<div class="row with-forms">
@@ -376,8 +221,32 @@
 </template>
 
 <script lang="js">
-export default {
+import { createNamespacedHelpers } from 'vuex'
+const {mapState,mapActions } = createNamespacedHelpers('moduleRoom')
 
+export default {
+	data() {
+		return {
+		}
+	},
+
+	created() {
+		const locationId = this.$route.query.locationId;
+		console.log(locationId)
+		this.getRoomByLocationId(locationId)
+	},
+
+	computed: {
+		...mapState({
+			listRoom: state => state.listRoom,
+		}),
+	},
+
+	methods: {
+		...mapActions({
+			getRoomByLocationId: 'getRoomByLocationIdAction',
+		}),
+	},
 }
 </script>
 
