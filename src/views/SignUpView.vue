@@ -24,14 +24,14 @@
                 <form class="register" @submit.prevent="handleSubmit">
                   <p class="form-row form-row-wide">
                     <label for="username2"
-                      >Username:
+                      >FullName:
                       <i class="im im-icon-Male"></i>
                       <input
                         type="text"
                         class="input-text"
                         name="username"
                         id="username2"
-                        v-model="userRegister.name"
+                        v-model="userRegister.FullName"
                       />
                     </label>
                   </p>
@@ -45,7 +45,7 @@
                         class="input-text"
                         name="email"
                         id="email2"
-                        v-model="userRegister.email"
+                        v-model="userRegister.Email"
                       />
                     </label>
                   </p>
@@ -73,6 +73,7 @@
                         type="password"
                         name="password2"
                         id="password2"
+                        @blur="handleCheckPassword"
                         v-model="userRegister.repeatPassword"
                       />
                     </label>
@@ -87,63 +88,7 @@
                         class="input-text"
                         name="phone"
                         id="phone"
-                        v-model="userRegister.phone"
-                      />
-                    </label>
-                  </p>
-
-                  <p class="form-row form-row-wide">
-                    <label for="birthday"
-                      >Birthday:
-                      <div style="display: flex">
-                        <select v-model="userRegister.year">
-                          <option label="year">year</option>
-                          <option
-                            v-for="(year, index) in arrayYear"
-                            :key="index"
-                          >
-                            {{ year }}
-                          </option>
-                        </select>
-                        <select v-model="userRegister.month">
-                          <option label="month">month</option>
-                          <option
-                            v-for="(month, index) in arrayMonth"
-                            :key="index"
-                          >
-                            {{ month }}
-                          </option>
-                        </select>
-                        <select v-model="userRegister.day">
-                          <option label="day">day</option>
-                          <option v-for="(day, index) in arrayDay" :key="index">
-                            {{ day }}
-                          </option>
-                        </select>
-                      </div>
-                    </label>
-                  </p>
-
-                  <p class="form-row form-row-wide">
-                    <label for="gender"
-                      >Gender:
-                      <select v-model="userRegister.gender">
-                        <option value="true">Boy</option>
-                        <option value="false">Girl</option>
-                      </select>
-                    </label>
-                  </p>
-
-                  <p class="form-row form-row-wide">
-                    <label for="address"
-                      >Address:
-                      <i class="im im-icon-Location-2"></i>
-                      <input
-                        class="input-text"
-                        type="text"
-                        name="address"
-                        id="address"
-                        v-model="userRegister.address"
+                        v-model="userRegister.PhoneNumber"
                       />
                     </label>
                   </p>
@@ -153,6 +98,7 @@
                     class="button border fw margin-top-10"
                     name="register"
                     value="Register"
+                    @click="handelSubmit"
                   />
                 </form>
               </div>
@@ -166,12 +112,37 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
 export default {
   data() {
       return {
-        userRegister: {}
+        userRegister: {},
+        isValidatePassword: true
+      }
+    },
+    
+    methods:{
+      ...mapActions({
+        postUserRegisterAction: 'postUserRegisterAction'
+      }),
+
+      handleCheckPassword(){
+        if (this.userRegister.repeatPassword!==this.userRegister.password){
+          alert("Mật khẩu không khớp")
+          this.isValidatePassword = false
+        }
+        else this.isValidatePassword = true
+      },
+
+      handelSubmit(){
+        if (this.isValidatePassword){
+          this.userRegister.Role = "User"
+          this.postUserRegisterAction(this.userRegister)
+        }
       }
     }
+    
 }
 </script>
 

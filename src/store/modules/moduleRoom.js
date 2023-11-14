@@ -1,19 +1,28 @@
-import { getRoomByLocationId } from '../../api/roomAPI'
+import { getRoomByLocationId, getRoomById } from '../../api/roomAPI'
 
 const state = () => ({
   listRoom: [],
+  roomDetail: {}
 })
 
 const mutations = {
-  setRoomMutation(state, data) {
+  setListRoomMutation(state, data) {
     state.listRoom = data
-    console.log(data)
+  },
+
+  setRoomMutation(state, data) {
+    state.roomDetail = data
   },
 }
 
 const actions = {
   async getRoomByLocationIdAction(context, locationId) {
     const data = await getRoomByLocationId(locationId)
+    context.commit('setListRoomMutation', data)
+  },
+
+  async getRoomByIdAction(context, roomId) {
+    const data = await getRoomById(roomId)
     context.commit('setRoomMutation', data)
   },
 }

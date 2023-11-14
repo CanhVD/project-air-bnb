@@ -29,6 +29,9 @@ export default {
       timer: 500,
     }
   },
+  created() {
+    this.clearStateLocationAction();
+  },
   computed: {
     ...mapState({
       listLocation: state => state.listLocation,
@@ -44,6 +47,7 @@ export default {
     },
     ...mapActions({
       getLocationByNameAction: 'getLocationByNameAction',
+      clearStateLocationAction: 'clearStateLocationAction'
     }),
   }
 }

@@ -6,12 +6,12 @@
 		<div class="row">
 			<div class="col-md-12">
 
-				<h2>Listings</h2><span>Grid Layout With Sidebar</span>
+				<h2>Danh sách các phòng</h2><span>Mong bạn sẽ có trải nghiệm tuyệt vời tại listeo</span>
 
 				<!-- Breadcrumbs -->
 				<nav id="breadcrumbs">
 					<ul>
-						<li><a href="#">Home</a></li>
+						<li><router-link to="/">Home</router-link></li>
 						<li>Listings</li>
 					</ul>
 				</nav>
@@ -62,7 +62,7 @@
 				<!-- Listing Item -->
 				<div class="col-lg-12 col-md-12" v-for="(room, index) in listRoom" :key="index">
 					<div class="listing-item-container list-layout">
-						<router-link :to="{ name: 'room-detail', params: { roomId: 'abc' } }" class="listing-item">
+						<router-link :to="{ name: 'room-detail', params: { roomId: room.id } }" class="listing-item">
 							
 							<!-- Image -->
 							<div class="listing-item-image">
@@ -76,7 +76,7 @@
 
 								<div class="listing-item-inner">
 									<h3>{{room.roomName}} <i class="verified-icon"></i></h3>
-									<span>964 School Street, New York</span>
+									<span>{{ room.location.district }}, {{ room.location.locationName  }}, {{ room.location.country  }}</span>
 									<div class="star-rating" data-rating="3.5">
 										<div class="rating-counter">({{ room.views }} reviews)</div>
 									</div>

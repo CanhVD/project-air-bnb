@@ -6,15 +6,15 @@
 			<!-- Titlebar -->
 			<div id="titlebar" class="listing-titlebar">
 				<div class="listing-titlebar-title">
-					<h2>Sunny and Modern Apartment<span class="listing-tag">Apartments</span></h2>
-					<span>
-						<a href="#listing-location" class="listing-address">
+				<h2>{{roomDetail.roomName}}<span class="listing-tag">{{ roomDetail.tag }}</span></h2>
+					<span v-if="roomDetail.location">
+						<a href="#" class="listing-address">
 							<i class="fa fa-map-marker"></i>
-							2726 Shinn Street, New York
+							{{ roomDetail.location.district }}, {{ roomDetail.location.locationName  }}, {{ roomDetail.location.country  }}
 						</a>
 					</span>
 					<div class="star-rating" data-rating="5">
-						<div class="rating-counter"><a href="#listing-reviews">(31 reviews)</a></div>
+						<div class="rating-counter"><a href="#listing-reviews">({{roomDetail.views}} reviews)</a></div>
 					</div>
 				</div>
 			</div>
@@ -24,7 +24,6 @@
 				<ul class="listing-nav">
 					<li><a href="#listing-overview" class="active">Overview</a></li>
 					<li><a href="#listing-gallery">Gallery</a></li>
-					<li><a href="#listing-location">Location</a></li>
 					<li><a href="#listing-reviews">Reviews</a></li>
 					<li><a href="#add-review">Add Review</a></li>
 				</ul>
@@ -35,28 +34,23 @@
 
 				<!-- Apartment Description -->
 				<ul class="apartment-details">
-					<li>2 rooms</li>
-					<li>1 bedroom</li>
-					<li>1 bed</li>
-					<li>1 bathroom</li>
+					<li>{{ roomDetail.quantityRoom }} rooms</li>
+					<li>{{ roomDetail.bedroom }} bedroom</li>
+					<li>{{ roomDetail.bed }} bed</li>
+					<li>{{ roomDetail.bath }} bathroom</li>
 				</ul>
 
 				<!-- Description -->
 				<p>
-					Ut euismod ultricies sollicitudin. Curabitur sed dapibus nulla. Nulla eget iaculis lectus. Mauris ac maximus neque. Nam in mauris quis libero sodales eleifend. Morbi varius, nulla sit amet rutrum elementum, est elit finibus tellus, ut tristique elit risus at metus.
+					{{ roomDetail.description }}
 				</p>
 
-				<p>
-					 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas in pulvinar neque. Nulla finibus lobortis pulvinar. Donec a consectetur nulla. Nulla posuere sapien vitae lectus suscipit, et pulvinar nisi tincidunt. Aliquam erat volutpat. Curabitur convallis fringilla diam sed aliquam. Sed tempor iaculis massa faucibus feugiat. In fermentum facilisis massa, a consequat purus viverra.
-				</p>
-
-				
 				<!-- Listing Contacts -->
 				<div class="listing-links-container">
 
 					<ul class="listing-links contact-links">
-						<li><a href="tel:12-345-678" class="listing-links"><i class="fa fa-phone"></i> +12 345 6578</a></li>
-						<li><a href="mailto:mail@example.com" class="listing-links"><i class="fa fa-envelope-o"></i> mail@example.com</a>
+						<li><a href="tel:12-345-678" class="listing-links"><i class="fa fa-phone"></i> {{ roomDetail.roomPhoneNumber }}</a></li>
+						<li><a href="mailto:mail@example.com" class="listing-links"><i class="fa fa-envelope-o"></i> {{ roomDetail.roomEmail }}</a>
 						</li>
 						<li><a href="#" target="_blank"  class="listing-links"><i class="fa fa-link"></i> www.example.com</a></li>
 					</ul>
@@ -76,26 +70,17 @@
 
 				<!-- Amenities -->
 				<h3 class="listing-desc-headline">Amenities</h3>
-				<ul class="listing-features checkboxes">
-					<li>Elevator in building</li>
-					<li>Friendly workspace</li>
-					<li>Instant Book</li>
-					<li>Wireless Internet</li>
-					<li>Free parking on premises</li>
-					<li>Free parking on street</li>
+				<ul class="listing-features checkboxes" v-if="roomDetail.amenities">
+					<li v-for="(amenity, index) in roomDetail.amenities.split(',')" :key="index">{{amenity}}</li>
 				</ul>
+				<span v-else>No information</span>
 			</div>
 
 
 			<!-- Slider -->
 			<div id="listing-gallery" class="listing-section">
 				<h3 class="listing-desc-headline margin-top-70">Gallery</h3>
-				<div class="listing-slider-small mfp-gallery-container margin-bottom-0">
-					<a href="images/single-listing-02a.jpg" data-background-image="images/single-listing-02a.jpg" class="item mfp-gallery" title="Title 2"></a>
-					<a href="images/single-listing-01a.jpg" data-background-image="images/single-listing-01a.jpg" class="item mfp-gallery" title="Title 1"></a>
-					<a href="images/single-listing-03a.jpg" data-background-image="images/single-listing-03a.jpg" class="item mfp-gallery" title="Title 3"></a>
-					<a href="images/single-listing-04a.jpg" data-background-image="images/single-listing-04a.jpg" class="item mfp-gallery" title="Title 3"></a>
-				</div>
+				<img style="width: 100%;" :src=" roomDetail.image " alt="" srcset="">
 			</div>
 
 			
@@ -368,37 +353,6 @@
 			<!-- Book Now -->
 			<div id="booking-widget-anchor" class="boxed-widget booking-widget margin-top-35">
 				<h3><i class="fa fa-calendar-check-o "></i> Booking</h3>
-				<div class="row with-forms  margin-top-0">
-
-					<!-- Date Range Picker - docs: http://www.daterangepicker.com/ -->
-					<div class="col-lg-12">
-						<input type="text" id="date-picker" placeholder="Date" readonly="readonly">
-					</div>
-
-					<!-- Panel Dropdown -->
-					<div class="col-lg-12">
-						<div class="panel-dropdown">
-							<a href="#">Guests <span class="qtyTotal" name="qtyTotal">1</span></a>
-							<div class="panel-dropdown-content">
-
-								<!-- Quantity Buttons -->
-								<div class="qtyButtons">
-									<div class="qtyTitle">Adults</div>
-									<input type="text" name="qtyInput" value="1">
-								</div>
-
-								<div class="qtyButtons">
-									<div class="qtyTitle">Childrens</div>
-									<input type="text" name="qtyInput" value="0">
-								</div>
-
-							</div>
-						</div>
-					</div>
-					<!-- Panel Dropdown / End -->
-
-				</div>
-				
 				<!-- Book Now -->
 				<router-link to="/booking" class="button book-now fullwidth margin-top-5">Request To Book</router-link>
 				
@@ -468,8 +422,26 @@
 </template>
 
 <script lang="js">
+import { createNamespacedHelpers } from 'vuex'
+const {mapState,mapActions } = createNamespacedHelpers('moduleRoom')
 export default {
-	props: ['roomId'],
+	created() {
+		const roomId = this.$route.params.roomId;
+		this.getRoomByIdAction(roomId)
+	},
+
+	computed: {
+		...mapState({
+			roomDetail: state => state.roomDetail,
+		}),
+	},
+
+	methods: {
+		...mapActions({
+			getRoomByIdAction: 'getRoomByIdAction',
+		}),
+	},
+
 }
 </script>
 

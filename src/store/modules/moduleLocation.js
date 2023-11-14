@@ -4,10 +4,18 @@ const state = () => ({
   listLocation: [],
 })
 
+// const getters = {
+//   userListBySearchName(state) {
+//     const {listLocation } = state;
+//     return listLocation.filter((location) =>
+//       user.name.toLowerCase().includes(searchName.toLowerCase())
+//     );
+//   },
+// };
+
 const mutations = {
   setLocationMutation(state, data) {
     state.listLocation = data
-    console.log(data)
   },
 }
 
@@ -16,6 +24,10 @@ const actions = {
     const data = await getLocationByNameAPI(locationName)
     context.commit('setLocationMutation', data)
   },
+
+  clearStateLocationAction(context) {
+    context.commit('setLocationMutation', [])
+  }
 }
 
 export default {
