@@ -31,7 +31,7 @@
                         class="input-text"
                         name="username"
                         id="username2"
-                        v-model="userRegister.FullName"
+                        v-model="userRegister.fullName"
                       />
                     </label>
                   </p>
@@ -45,7 +45,7 @@
                         class="input-text"
                         name="email"
                         id="email2"
-                        v-model="userRegister.Email"
+                        v-model="userRegister.email"
                       />
                     </label>
                   </p>
@@ -88,7 +88,7 @@
                         class="input-text"
                         name="phone"
                         id="phone"
-                        v-model="userRegister.PhoneNumber"
+                        v-model="userRegister.phoneNumber"
                       />
                     </label>
                   </p>
@@ -98,7 +98,6 @@
                     class="button border fw margin-top-10"
                     name="register"
                     value="Register"
-                    @click="handelSubmit"
                   />
                 </form>
               </div>
@@ -118,7 +117,7 @@ export default {
   data() {
       return {
         userRegister: {},
-        isValidatePassword: true
+        isValidatePassword: false
       }
     },
     
@@ -135,9 +134,9 @@ export default {
         else this.isValidatePassword = true
       },
 
-      handelSubmit(){
+      handleSubmit(){
         if (this.isValidatePassword){
-          this.userRegister.Role = "User"
+          this.userRegister.role = "User"
           this.postUserRegisterAction(this.userRegister)
         }
       }

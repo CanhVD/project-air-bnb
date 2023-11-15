@@ -77,12 +77,24 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex'
+import router from '@/router'
+const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
 export default {
     data() {
       return {
-        userLogin: {}
+        userLogin: {},
       }
-    }
+    },
+    methods:{
+      ...mapActions({
+        postUserLoginAction: 'postUserLoginAction'
+      }),
+
+      handleSubmit(){
+          this.postUserLoginAction({userLogin:this.userLogin, router})
+        }
+      }
 }
 </script>
 

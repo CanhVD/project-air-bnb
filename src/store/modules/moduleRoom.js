@@ -17,13 +17,23 @@ const mutations = {
 
 const actions = {
   async getRoomByLocationIdAction(context, locationId) {
-    const data = await getRoomByLocationId(locationId)
-    context.commit('setListRoomMutation', data)
+    try {
+      const data = await getRoomByLocationId(locationId)
+      context.commit('setListRoomMutation', data)
+    } catch (error) {
+      alert(error)
+    }
+
   },
 
   async getRoomByIdAction(context, roomId) {
-    const data = await getRoomById(roomId)
-    context.commit('setRoomMutation', data)
+    try {
+      const data = await getRoomById(roomId)
+      context.commit('setRoomMutation', data)
+    } catch (error) {
+      alert(error)
+    }
+
   },
 }
 

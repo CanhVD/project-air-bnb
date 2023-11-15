@@ -1,0 +1,47 @@
+<template>
+   <!-- User Menu -->
+   <div class="user-menu" v-if="userDetail.userName">
+          <div class="user-name" @click="myProfile=!myProfile"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Xin chào, {{ userDetail.fullName }}</div>
+          <ul v-if="myProfile">
+            <li><router-link to="/my-profile"><i class="sl sl-icon-settings"></i> My Profile</router-link></li>
+            <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
+            <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
+            <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+          </ul>
+        </div>
+        <div v-else>
+          <router-link to="/login" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</router-link>
+          <router-link to="/signup" class="button border with-icon">Sign Up <i class="sl sl-icon-plus"></i></router-link>
+        </div>
+</template>
+
+<script>
+import { createNamespacedHelpers } from 'vuex'
+const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
+export default {
+  data(){
+    return {
+      myProfile: false
+    }
+  },
+  created(){
+    this.loadUserLoginFromLocalStorageAction()
+  },
+
+  computed: {
+		...mapState({
+			userDetail: state => state.userDetail,
+		}),
+	},
+
+  methods:{
+    ...mapActions({
+      loadUserLoginFromLocalStorageAction: "loadUserLoginFromLocalStorageAction"
+    })
+  }
+}
+</script>
+
+<style>
+
+</style>

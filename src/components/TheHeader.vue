@@ -145,21 +145,7 @@
     <div class="right-side">
       <!-- Header Widget -->
       <div class="header-widget">
-        
-        <!-- User Menu -->
-        <div class="user-menu" v-if="userDetail.userName">
-          <div class="user-name"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Hi, Tom!</div>
-          <ul>
-            <li><a href="dashboard.html"><i class="sl sl-icon-settings"></i> Dashboard</a></li>
-            <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
-            <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
-            <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
-          </ul>
-        </div>
-        <div v-else>
-          <router-link to="/login" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</router-link>
-          <router-link to="/signup" class="button border with-icon">Sign Up <i class="sl sl-icon-plus"></i></router-link>
-        </div>
+        <user-infomation></user-infomation>
       </div>
       <!-- Header Widget / End -->
     </div>
@@ -263,14 +249,9 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex'
-const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
+import UserInfomation from './UserInfomation.vue'
 export default {
-  computed: {
-		...mapState({
-			userDetail: state => state.userDetail,
-		}),
-	},
+  components: { UserInfomation },
 }
 </script>
 

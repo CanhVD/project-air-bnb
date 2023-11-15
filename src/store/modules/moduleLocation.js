@@ -21,8 +21,13 @@ const mutations = {
 
 const actions = {
   async getLocationByNameAction(context, locationName) {
-    const data = await getLocationByNameAPI(locationName)
-    context.commit('setLocationMutation', data)
+    try {
+      const data = await getLocationByNameAPI(locationName)
+      context.commit('setLocationMutation', data)
+    } catch (error) {
+      alert(error)
+    }
+
   },
 
   clearStateLocationAction(context) {

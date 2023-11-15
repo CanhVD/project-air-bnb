@@ -5,6 +5,7 @@ import RoomDetailView from '../views/RoomDetailView.vue'
 import BookingView from '../views/BookingView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
+import MyProfileView from '../views/MyProfileView.vue'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: SignUpView,
+  },
+  {
+    path: '/my-profile',
+    name: 'MyProfile',
+    component: MyProfileView,
   },
 
   {
