@@ -69,7 +69,7 @@
               </div>
             </div>
           </div>
-          <button title="Close (Esc)" type="button" class="mfp-close"></button>
+          <button title="Close (Esc)" type="button" class="mfp-close" @click="handleGoBack"></button>
         </div>
       </div>
     </div>
@@ -93,8 +93,13 @@ export default {
 
       handleSubmit(){
           this.postUserLoginAction({userLogin:this.userLogin, router})
-        }
+      },
+      
+      handleGoBack(){
+        router.go(-1)
       }
+    },
+
 }
 </script>
 

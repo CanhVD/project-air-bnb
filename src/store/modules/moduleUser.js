@@ -13,6 +13,9 @@ const mutations = {
 
   setUserLoginFromLocalStorage(state, user) {
     state.userDetail = user
+  },
+  logOutUserMutation(state) {
+    state.userDetail = {}
   }
 }
 
@@ -35,6 +38,11 @@ const actions = {
     } catch (error) {
       alert(error.message)
     }
+  },
+
+  logOutUserAction(context) {
+    localStorage.removeItem("userLogin");
+    context.commit("logOutUserMutation")
   },
 
   loadUserLoginFromLocalStorageAction(context) {

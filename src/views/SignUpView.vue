@@ -103,7 +103,7 @@
               </div>
             </div>
           </div>
-          <button title="Close (Esc)" type="button" class="mfp-close"></button>
+          <button title="Close (Esc)" type="button" class="mfp-close" @click="handleGoBack"></button>
         </div>
       </div>
     </div>
@@ -112,6 +112,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex'
+import router from '@/router'
 const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
 export default {
   data() {
@@ -139,6 +140,10 @@ export default {
           this.userRegister.role = "User"
           this.postUserRegisterAction(this.userRegister)
         }
+      },
+
+      handleGoBack(){
+        router.go(-1)
       }
     }
     

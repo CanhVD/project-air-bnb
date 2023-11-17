@@ -6,12 +6,15 @@
             <li><router-link to="/my-profile"><i class="sl sl-icon-settings"></i> My Profile</router-link></li>
             <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>
             <li><a href="dashboard-bookings.html"><i class="fa fa-calendar-check-o"></i> Bookings</a></li>
-            <li><a href="index.html"><i class="sl sl-icon-power"></i> Logout</a></li>
+            <li><a href="#" @click="notificationVisible = true, myProfile=false"><i class="sl sl-icon-power"></i> Logout</a></li>
           </ul>
         </div>
         <div v-else>
           <router-link to="/login" class="sign-in popup-with-zoom-anim"><i class="sl sl-icon-login"></i> Sign In</router-link>
           <router-link to="/signup" class="button border with-icon">Sign Up <i class="sl sl-icon-plus"></i></router-link>
+        </div>
+        <div v-if="notificationVisible">
+          <the-notification :notificationTitle="notificationTitle" :notificationContent="notificationContent" :handleSubmit="handleLogOutUser" :handleClose="handleCloseNotification"></the-notification>
         </div>
 </template>
 
@@ -21,7 +24,10 @@ const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
 export default {
   data(){
     return {
-      myProfile: false
+      myProfile: false,
+      notificationTitle: "Đăng xuất",
+      notificationContent: "Bạn có chắc muốn đăng xuất không?",
+      notificationVisible: false
     }
   },
   created(){
@@ -35,8 +41,16 @@ export default {
 	},
 
   methods:{
+    handleLogOutUser(){
+      this.logOutUserAction()
+      this.notificationVisible = false
+    },
+    handleCloseNotification(){
+      this.notificationVisible = false
+    },
     ...mapActions({
-      loadUserLoginFromLocalStorageAction: "loadUserLoginFromLocalStorageAction"
+      loadUserLoginFromLocalStorageAction: "loadUserLoginFromLocalStorageAction",
+      logOutUserAction: "logOutUserAction"
     })
   }
 }
