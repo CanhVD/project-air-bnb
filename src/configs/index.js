@@ -1,6 +1,7 @@
 export default {
   // token cybersoft
   tokenByClass:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoibGFwaG9uZyIsImp0aSI6IjNjYjgxNTI0LWU0ZTktNDVkNi1iZjRiLTgzZWY0NDZmMGNjZiIsImF1ZCI6WyJodHRwczovL2xvY2FsaG9zdDo0NDM1NiIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzU2Il0sImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzU2IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTY5OTA5NzIyM30.dUwt-QRVNq60aY5Kj3yJ5o80ipnRYW2pNjfXPfIUsu4',
+    '',
   baseUrl: 'https://localhost:44356',
+  urlLocal: 'http://localhost:8080/'
 }

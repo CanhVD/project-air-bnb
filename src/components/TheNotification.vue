@@ -63,7 +63,7 @@ props:{
     top: 50vh;
     left: 50%;
     transform: translate(-50%, -50%);
-    
+    border: 1px solid #e3e3e3;
     background-color: white;
     color: #333;
     border-radius: 3px;

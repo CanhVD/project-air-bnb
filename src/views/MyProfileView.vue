@@ -52,15 +52,6 @@
 
           <label>Notes</label>
           <textarea name="notes" id="notes" cols="30" rows="10" v-model="userDetail.note">Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper</textarea>
-
-          <label><i class="fa fa-twitter"></i> Twitter</label>
-          <input placeholder="https://www.twitter.com/" type="text">
-
-          <label><i class="fa fa-facebook-square"></i> Facebook</label>
-          <input placeholder="https://www.facebook.com/" type="text">
-
-          <label><i class="fa fa-google-plus"></i> Google+</label>
-          <input placeholder="https://www.google.com/" type="text">
         </div>
 
         <button class="button margin-top-15">Save Changes</button>
@@ -78,13 +69,13 @@
         <!-- Change Password -->
         <div class="my-profile">
           <label class="margin-top-0">Current Password</label>
-          <input type="password" v-model="changePassword.passwordCurrent">
+          <input type="password" v-model="changePassword.currentPassword">
 
           <label>New Password</label>
-          <input type="password" v-model="changePassword.passwordNew">
+          <input type="password" v-model="changePassword.newPassword">
 
           <label>Confirm New Password</label>
-          <input type="password" v-model="changePassword.passwordNewConfirm">
+          <input type="password" v-model="changePassword.newPasswordConfirm">
 
           <button class="button margin-top-15" @click="handleSubmitChangePassword">Change Password</button>
         </div>
@@ -111,23 +102,31 @@ const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
 export default {
   data(){
     return {
-      changePassword:{
-        passwordCurrent: "",
-        passwordNew: "",
-        passwordNewConfirm: ""
-      }
+      changePassword:{}
     }
   },
-computed:{
-  ...mapState({
-    userDetail: state => state.userDetail,
-  })
-},
-methods:{
-  // handleSubmitChangePassword(){
-  //   if (this.changePassword.passwordCurrent !== this.userDetail.password)
-  // }
-}
+
+  computed:{
+    ...mapState({
+      userDetail: state => state.userDetail,
+    })
+  },
+
+  methods:{
+    ...mapActions({
+      changePasswordAction: "changePasswordAction"
+    }),
+
+    handleSubmitChangePassword(){
+      if (this.changePassword.newPassword !== this.changePassword.newPasswordConfirm){
+        alert("Xác nhận mật khẩu mới không khớp")
+        return
+      }
+      this.changePassword.email = this.userDetail.email
+      this.changePasswordAction(this.changePassword)
+      this.changePassword = {}
+    }
+  }
 }
 </script>
 
