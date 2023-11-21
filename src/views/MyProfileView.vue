@@ -29,11 +29,11 @@
         
         <!-- Avatar -->
         <div class="edit-profile-photo">
-          <img src="images/user-avatar.jpg" alt="">
+          <img ref="avatar" src="images/user-avatar.jpg" alt="">
           <div class="change-photo-btn">
             <div class="photoUpload">
                 <span><i class="fa fa-upload"></i> Upload Photo</span>
-                <input type="file" class="upload"/>
+                <input type="file" class="upload" accept="image/png, image/jpeg" @change="handleUploadImage"/>
             </div>
           </div>
         </div>
@@ -125,6 +125,11 @@ export default {
       this.changePassword.email = this.userDetail.email
       this.changePasswordAction(this.changePassword)
       this.changePassword = {}
+    },
+
+    handleUploadImage(event){
+      const fileImage = event.target.files[0]
+      this.$refs.avatar.src = URL.createObjectURL(fileImage)
     }
   }
 }
