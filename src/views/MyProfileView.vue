@@ -22,43 +22,47 @@
 <div class="row">
 
   <!-- Profile -->
-  <div class="col-lg-6 col-md-12">
-    <div class="dashboard-list-box margin-top-0">
-      <h4 class="gray">Profile Details</h4>
-      <div class="dashboard-list-box-static">
-        
-        <!-- Avatar -->
-        <div class="edit-profile-photo">
-          <img ref="avatar" src="images/user-avatar.jpg" alt="">
-          <div class="change-photo-btn">
-            <div class="photoUpload">
-                <span><i class="fa fa-upload"></i> Upload Photo</span>
-                <input type="file" class="upload" accept="image/png, image/jpeg" @change="handleUploadImage"/>
+  <form @submit.prevent="handleChangeProfile">
+    <div class="col-lg-6 col-md-12">
+      <div class="dashboard-list-box margin-top-0">
+        <h4 class="gray">Profile Details</h4>
+        <div class="dashboard-list-box-static">
+          
+          <!-- Avatar -->
+          <div class="edit-profile-photo">
+            <img v-if="userDetail.avatar" ref="avatar" :src="userDetail.avatar" alt="">
+            <img v-else ref="avatar" src="images/user-avatar.jpg" alt="">
+            <div class="change-photo-btn">
+              <div class="photoUpload">
+                  <span><i class="fa fa-upload"></i> Upload Photo</span>
+                  <input type="file" class="upload" accept="image/png, image/jpeg" @change="handleUploadImage"/>
+              </div>
             </div>
           </div>
+  
+          <!-- Details -->
+          <div class="my-profile">
+  
+            <label>Your Name</label>
+            <input v-model="userDetail.fullName" type="text">
+  
+            <label>Phone</label>
+            <input v-model="userDetail.phoneNumber" type="text">
+  
+            <label>Email</label>
+            <input v-model="userDetail.email" type="text" disabled>
+  
+            <label>Notes</label>
+            <textarea name="notes" id="notes" cols="30" rows="10" v-model="userDetail.note">Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper</textarea>
+          </div>
+  
+          <button class="button margin-top-15">Save Changes</button>
+  
         </div>
-
-        <!-- Details -->
-        <div class="my-profile">
-
-          <label>Your Name</label>
-          <input v-model="userDetail.fullName" type="text">
-
-          <label>Phone</label>
-          <input v-model="userDetail.phoneNumber" type="text">
-
-          <label>Email</label>
-          <input v-model="userDetail.email" type="text">
-
-          <label>Notes</label>
-          <textarea name="notes" id="notes" cols="30" rows="10" v-model="userDetail.note">Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper</textarea>
-        </div>
-
-        <button class="button margin-top-15">Save Changes</button>
-
       </div>
     </div>
-  </div>
+    
+  </form>
 
   <!-- Change Password -->
   <div class="col-lg-6 col-md-12">
@@ -114,7 +118,8 @@ export default {
 
   methods:{
     ...mapActions({
-      changePasswordAction: "changePasswordAction"
+      changePasswordAction: "changePasswordAction",
+      changeProfileAction: "changeProfileAction"
     }),
 
     handleSubmitChangePassword(){
@@ -129,7 +134,19 @@ export default {
 
     handleUploadImage(event){
       const fileImage = event.target.files[0]
+      this.userDetail.fileAvatar = fileImage
       this.$refs.avatar.src = URL.createObjectURL(fileImage)
+    },
+
+    handleChangeProfile(){
+      const formData = new FormData();
+      formData.append("fullName", this.userDetail.fullName);
+      formData.append("note", this.userDetail.note);
+      formData.append("email", this.userDetail.email);
+      formData.append("phoneNumber", this.userDetail.phoneNumber);
+      formData.append("fileAvatar", this.userDetail.fileAvatar);
+      this.changeProfileAction(formData)
+
     }
   }
 }

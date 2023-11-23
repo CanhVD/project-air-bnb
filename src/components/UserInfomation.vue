@@ -1,7 +1,8 @@
 <template>
    <!-- User Menu -->
    <div class="user-menu" v-if="userDetail.userName">
-          <div class="user-name" @click="handleDisplaySetting"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Xin chào, {{ userDetail.fullName }}</div>
+          <div class="user-name" v-if="userDetail.avatar" @click="handleDisplaySetting"><span><img :src="userDetail.avatar" alt=""></span>Xin chào, {{ userDetail.fullName }}</div>
+          <div class="user-name" v-else @click="handleDisplaySetting"><span><img src="images/dashboard-avatar.jpg" alt=""></span>Xin chào, {{ userDetail.fullName }}</div>
           <ul v-show="myProfile">
             <li><router-link to="/my-profile"><i class="sl sl-icon-settings"></i> My Profile</router-link></li>
             <li><a href="dashboard-messages.html"><i class="sl sl-icon-envelope-open"></i> Messages</a></li>

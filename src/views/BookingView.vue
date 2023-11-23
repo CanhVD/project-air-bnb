@@ -38,19 +38,19 @@
 			<div class="row">
 
 				<div class="col-md-6">
-					<label>First Name</label>
-					<input type="text" value="">
+					<label>Check In</label>
+					<input type="date">
 				</div>
 
 				<div class="col-md-6">
-					<label>Last Name</label>
-					<input type="text" value="">
+					<label>Check Out</label>
+					<input type="date">
 				</div>
 
 				<div class="col-md-6">
 					<div class="input-with-icon medium-icons">
 						<label>E-Mail Address</label>
-						<input type="text" value="">
+						<input type="text" v-model="userDetail.email" disabled>
 						<i class="im im-icon-Mail"></i>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 				<div class="col-md-6">
 					<div class="input-with-icon medium-icons">
 						<label>Phone</label>
-						<input type="text" value="">
+						<input type="text" v-model="userDetail.phoneNumber" disabled>
 						<i class="im im-icon-Phone-2"></i>
 					</div>
 				</div>
@@ -176,7 +176,20 @@
 </template>
 
 <script lang="js">
+import { createNamespacedHelpers } from 'vuex'
+const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
 export default {
+	data(){
+		return {
+			booking:{}
+		}
+	},
+
+	computed:{
+		...mapState({
+      userDetail: state => state.userDetail,
+    })
+	}
 
 }
 </script>

@@ -1,6 +1,7 @@
 import { postUserRegister } from '../../api/userAPI'
 import { postUserLogin } from '../../api/userAPI'
-import { postChangePassword } from '../../api/userAPI'
+import { putChangePassword } from '../../api/userAPI'
+import { putChangeProfile } from '../../api/userAPI'
 import configs from '../../configs'
 
 
@@ -12,13 +13,15 @@ const mutations = {
   setUserDetailMutation(state, data) {
     state.userDetail = data.user
     localStorage.setItem("userLogin", JSON.stringify(data));
-    configs.tokenByClass = data.token
+    if (data.token)
+      configs.tokenByClass = data.token
   },
 
   setUserLoginFromLocalStorage(state, data) {
     state.userDetail = data.user
     configs.tokenByClass = data.token
   },
+
   logOutUserMutation(state) {
     state.userDetail = {}
   }
@@ -28,7 +31,7 @@ const actions = {
   async postUserRegisterAction(context, userRegister) {
     try {
       const res = await postUserRegister(userRegister)
-      context.commit("setUserDetailMutation", res.user)
+      context.commit("setUserDetailMutation", res)
     } catch (error) {
       alert(error)
     }
@@ -47,7 +50,7 @@ const actions = {
   },
 
   logOutUserAction(context) {
-    localStorage.removeItem("userLogin");
+    localStorage.removeItem("userLogin")
     context.commit("logOutUserMutation")
   },
 
@@ -62,11 +65,24 @@ const actions = {
   async changePasswordAction(context, changePassword) {
     try {
       console.log(changePassword)
-      await postChangePassword(changePassword)
+      await putChangePassword(changePassword)
       alert("Thay đổi mật khẩu thành công")
 
     } catch (error) {
       alert("Thay đổi mật khẩu thất bại")
+    }
+  },
+
+  async changeProfileAction(context, changeProfile) {
+    try {
+      console.log(changeProfile)
+      const res = await putChangeProfile(changeProfile)
+      alert("Thay đổi thông tin thành công")
+      context.commit("setUserDetailMutation", res)
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+      alert("Thay đổi thông tin thất bại")
     }
   }
 }
