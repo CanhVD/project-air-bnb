@@ -39,12 +39,12 @@
 
 				<div class="col-md-6">
 					<label>Check In</label>
-					<input type="date">
+					<input type="date" v-model="booking.checkIn">
 				</div>
 
 				<div class="col-md-6">
 					<label>Check Out</label>
-					<input type="date">
+					<input type="date" v-model="booking.checkOut">
 				</div>
 
 				<div class="col-md-6">
@@ -135,8 +135,8 @@
 
 			</div>
 			<!-- Payment Methods Accordion / End -->
-		
-			<a href="pages-booking-confirmation.html" class="button booking-confirmation-btn margin-top-40 margin-bottom-65">Confirm and Pay</a>
+
+			<a href="#" @click="handleSubmitBooking" class="button booking-confirmation-btn margin-top-40 margin-bottom-65">Confirm and Pay</a>
 		</div>
 
 
@@ -147,22 +147,22 @@
 			<!-- Booking Summary -->
 			<div class="listing-item-container compact order-summary-widget">
 				<div class="listing-item">
-					<img src="images/listing-item-04.jpg" alt="">
+					<img :src="roomDetail.image" alt="">
 
 					<div class="listing-item-content">
 						<div class="numerical-rating" data-rating="5.0"></div>
-						<h3>Burger House</h3>
-						<span>2726 Shinn Street, New York</span>
+						<h3>{{ roomDetail.roomName }}</h3>
+						<span>{{ roomDetail.location.district }}, {{ roomDetail.location.locationName  }}, {{ roomDetail.location.country  }}</span>
 					</div>
 				</div>
 			</div>
 			<div class="boxed-widget opening-hours summary margin-top-0">
 				<h3><i class="fa fa-calendar-check-o"></i> Booking Summary</h3>
 				<ul>
-					<li>Date <span>10/20/2019</span></li>
-					<li>Hour <span>5:30 PM</span></li>
-					<li>Guests <span>2 Adults</span></li>
-					<li class="total-costs">Total Cost <span>$9.00</span></li>
+					<li>Check In <span>{{ checkIn }}</span></li>
+					<li>Check Out <span>{{ checkOut }}</span></li>
+					<li>Day <span>{{ day }} Day</span></li>
+					<li class="total-costs">Total Cost <span>{{ totalCost }}</span></li>
 				</ul>
 
 			</div>
@@ -177,18 +177,100 @@
 
 <script lang="js">
 import { createNamespacedHelpers } from 'vuex'
+import { addBooking } from '../api/bookingAPI'
+import router from '@/router'
 const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
+const { mapState: mapStateModuleRoom, mapActions: mapActionsModule2 } = createNamespacedHelpers('moduleRoom')
 export default {
 	data(){
 		return {
-			booking:{}
+			booking:{},
+			day: ''
 		}
 	},
 
 	computed:{
 		...mapState({
       userDetail: state => state.userDetail,
-    })
+    }),
+		...mapStateModuleRoom({
+			roomDetail: state => state.roomDetail,
+    }),
+
+		totalCost(){
+			if (this.booking.checkIn && this.booking.checkOut && this.booking.checkIn < this.booking.checkOut ) 
+			{
+				 // Chuyển đổi giá trị ngày thành đối tượng Date
+				 	const start = new Date(this.booking.checkIn);
+					const end = new Date(this.booking.checkOut);
+
+					// Tính hiệu giữa hai ngày
+					const timeDifference = end.getTime() - start.getTime();
+
+					// Chuyển đổi kết quả thành số ngày và Làm tròn số ngày
+					const daysDifference = Math.round(timeDifference / (1000 * 3600 * 24));
+					this.day = daysDifference
+					return "$" + `${daysDifference * this.roomDetail.price}`;
+			}
+			else return "$0.00" 
+		},
+
+		checkIn(){
+			if (this.booking.checkIn){
+				const date = new Date(this.booking.checkIn)
+				let day = date.getDate();
+				day = day < 10 ? `0${day}` : day
+
+				let month = date.getMonth();
+				month = month < 10 ? `0${month}` : month
+
+				let year = date.getFullYear();
+
+				return `${day}/${month}/${year}`
+			}
+
+			return ''
+		},
+
+		checkOut(){
+			if (this.booking.checkOut){
+				const date = new Date(this.booking.checkOut)
+				let day = date.getDate();
+				day = day < 10 ? `0${day}` : day
+
+				let month = date.getMonth();
+				month = month < 10 ? `0${month}` : month
+
+				let year = date.getFullYear();
+
+				return `${day}/${month}/${year}`
+			}
+			
+			return ''
+		}
+	},
+
+	methods:{
+		async	handleSubmitBooking(){
+			try {
+				if (!this.booking.checkIn || !this.booking.checkOut){
+					alert("Vui lòng chọn ngày bắt đầu và ngày kết thúc")
+				} 
+				else if (this.booking.checkIn > this.booking.checkOut){
+					alert("Ngày kết thúc phải lớn hơn ngày bắt đầu đặt phòng")
+					return
+				}
+				else{
+					this.booking.roomId = this.roomDetail.id
+					this.booking.emailUser = this.userDetail.email
+					await	addBooking(this.booking)
+					alert("Đặt phòng thành công")
+					router.push("/thanh-you")
+				}
+			} catch (error) {
+				alert("Đặt phòng không thành công")
+			}
+		}
 	}
 
 }

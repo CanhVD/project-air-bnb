@@ -6,6 +6,7 @@ import BookingView from '../views/BookingView.vue'
 import LoginView from '../views/LoginView.vue'
 import SignUpView from '../views/SignUpView.vue'
 import MyProfileView from '../views/MyProfileView.vue'
+import ThankYouView from '../views/ThankYouView.vue'
 
 const routes = [
   {
@@ -43,7 +44,11 @@ const routes = [
     name: 'MyProfile',
     component: MyProfileView,
   },
-
+  {
+    path: '/thank-you',
+    name: 'ThankYou',
+    component: ThankYouView,
+  },
   {
     path: '/about',
     name: 'about',

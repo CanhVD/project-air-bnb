@@ -140,6 +140,7 @@ export default {
           this.userRegister.role = "User"
           this.postUserRegisterAction(this.userRegister)
         }
+        else alert("Bạn chưa nhập mật khẩu")
       },
 
       handleGoBack(){

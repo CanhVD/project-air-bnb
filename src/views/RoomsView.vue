@@ -61,31 +61,7 @@
 			<div class="row">
 				<!-- Listing Item -->
 				<div class="col-lg-12 col-md-12" v-for="(room, index) in listRoom" :key="index">
-					<div class="listing-item-container list-layout">
-						<router-link :to="{ name: 'room-detail', params: { roomId: room.id } }" class="listing-item">
-							
-							<!-- Image -->
-							<div class="listing-item-image">
-								<img :src="room.image" :alt="room.roomName">
-								<span class="tag">{{ room.price }}</span>
-							</div>
-							
-							<!-- Content -->
-							<div class="listing-item-content">
-								<div class="listing-badge now-open">{{room.tag}}</div>
-
-								<div class="listing-item-inner">
-									<h3>{{room.roomName}} <i class="verified-icon"></i></h3>
-									<span>{{ room.location.district }}, {{ room.location.locationName  }}, {{ room.location.country  }}</span>
-									<div class="star-rating" data-rating="3.5">
-										<div class="rating-counter">({{ room.views }} reviews)</div>
-									</div>
-								</div>
-
-								<span class="like-icon"></span>
-							</div>
-						</router-link>
-					</div>
+					<room-detail :room = "room"/>
 				</div>
 				<!-- Listing Item / End -->
 			</div>
@@ -222,12 +198,17 @@
 
 <script lang="js">
 import { createNamespacedHelpers } from 'vuex'
+import RoomDetail from '../components/RoomDetail.vue'
 const {mapState,mapActions } = createNamespacedHelpers('moduleRoom')
 
 export default {
 	data() {
 		return {
 		}
+	},
+
+	components:{
+		RoomDetail
 	},
 
 	created() {

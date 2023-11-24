@@ -1,3 +1,4 @@
+import router from '@/router'
 import { postUserRegister } from '../../api/userAPI'
 import { postUserLogin } from '../../api/userAPI'
 import { putChangePassword } from '../../api/userAPI'
@@ -31,9 +32,11 @@ const actions = {
   async postUserRegisterAction(context, userRegister) {
     try {
       const res = await postUserRegister(userRegister)
-      context.commit("setUserDetailMutation", res)
+      alert("Tạo tài khoản thành công")
+      router.push("/login")
     } catch (error) {
-      alert(error)
+      console.log(error)
+      alert(error.message)
     }
 
   },
