@@ -1,13 +1,13 @@
 import { getRoomByLocationId, getRoomById } from '../../api/roomAPI'
 
 const state = () => ({
-  listRoom: [],
+  dataRoom: {},
   roomDetail: {}
 })
 
 const mutations = {
-  setListRoomMutation(state, data) {
-    state.listRoom = data
+  setDataRoomMutation(state, data) {
+    state.dataRoom = data
   },
 
   setRoomMutation(state, data) {
@@ -16,10 +16,10 @@ const mutations = {
 }
 
 const actions = {
-  async getRoomByLocationIdAction(context, locationId) {
+  async getRoomByLocationIdAction(context, { locationId, pageIndex }) {
     try {
-      const data = await getRoomByLocationId(locationId)
-      context.commit('setListRoomMutation', data)
+      const data = await getRoomByLocationId(locationId, pageIndex)
+      context.commit('setDataRoomMutation', data)
     } catch (error) {
       alert(error)
     }

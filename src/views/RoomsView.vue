@@ -74,10 +74,9 @@
 					<div class="pagination-container margin-top-20 margin-bottom-40">
 						<nav class="pagination">
 							<ul>
-								<li><a href="#" class="current-page">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+								<li v-show="currentPageIndex>=2" @click="handleGetRooms(currentPageIndex-1)"><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+								<li v-for="n in totalPage" :key="n" @click="handleGetRooms(n)"><a href="#" :class="{'current-page': n===currentPageIndex}">{{ n }}</a></li>
+								<li v-show="currentPageIndex<totalPage" @click="handleGetRooms(currentPageIndex+1)"><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
 							</ul>
 						</nav>
 					</div>
@@ -204,6 +203,8 @@ const {mapState,mapActions } = createNamespacedHelpers('moduleRoom')
 export default {
 	data() {
 		return {
+			locationId:null,
+			currentPageIndex: 1
 		}
 	},
 
@@ -212,14 +213,16 @@ export default {
 	},
 
 	created() {
-		const locationId = this.$route.query.locationId;
-		console.log(locationId)
-		this.getRoomByLocationId(locationId)
+		this.locationId = this.$route.query.locationId;
+		this.getRoomByLocationId({
+				locationId:this.locationId
+			})
 	},
 
 	computed: {
 		...mapState({
-			listRoom: state => state.listRoom,
+			listRoom: state => state.dataRoom.listRoom,
+			totalPage: state => state.dataRoom.totalPage,
 		}),
 	},
 
@@ -227,6 +230,14 @@ export default {
 		...mapActions({
 			getRoomByLocationId: 'getRoomByLocationIdAction',
 		}),
+
+		handleGetRooms(pageIndex){
+			this.currentPageIndex = pageIndex
+			this.getRoomByLocationId({
+				locationId:this.locationId,
+				pageIndex: pageIndex
+			})
+		}
 	},
 }
 </script>
