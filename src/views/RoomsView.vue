@@ -221,7 +221,7 @@ export default {
 
 	computed: {
 		...mapState({
-			listRoom: state => state.dataRoom.listRoom,
+			listRoom: state => state.dataRoom.listData,
 			totalPage: state => state.dataRoom.totalPage,
 		}),
 	},

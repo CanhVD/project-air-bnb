@@ -179,8 +179,8 @@
 import { createNamespacedHelpers } from 'vuex'
 import { addBooking } from '../api/bookingAPI'
 import router from '@/router'
-const {mapState,mapActions } = createNamespacedHelpers('moduleUser')
-const { mapState: mapStateModuleRoom, mapActions: mapActionsModule2 } = createNamespacedHelpers('moduleRoom')
+const {mapState } = createNamespacedHelpers('moduleUser')
+const { mapState: mapStateModuleRoom} = createNamespacedHelpers('moduleRoom')
 export default {
 	data(){
 		return {

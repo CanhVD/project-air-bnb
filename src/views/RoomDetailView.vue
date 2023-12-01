@@ -144,38 +144,16 @@
 				<!-- Reviews -->
 				<section class="comments listing-reviews">
 					<ul>
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
+						<li v-for="(comment, index) in comments" :key="index">
+							<div v-if="comment.user.avatar" class="avatar"><img :src="comment.user.avatar" alt="" /></div>
+							<div v-else class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
 							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">Kathy Brown <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">June 2019</span>
+								<div class="comment-by">{{ comment.user.fullName }} <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">{{comment.createDate}}</span>
 									<div class="star-rating" data-rating="5"></div>
 								</div>
-								<p>Morbi velit eros, sagittis in facilisis non, rhoncus et erat. Nam posuere tristique sem, eu ultricies tortor imperdiet vitae. Curabitur lacinia neque non metus</p>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>12</span></a>
+								<p>{{comment.content}}</p>
+								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>{{comment.like}}</span></a>
 							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">John Doe<span class="date">May 2019</span>
-									<div class="star-rating" data-rating="4"></div>
-								</div>
-								<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>2</span></a>
-							</div>
-						</li>
-
-						<li>
-							<div class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /> </div>
-							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">John Doe<span class="date">May 2019</span>
-									<div class="star-rating" data-rating="5"></div>
-								</div>
-								<p>Commodo est luctus eget. Proin in nunc laoreet justo volutpat blandit enim. Sem felis, ullamcorper vel aliquam non, varius eget justo. Duis quis nunc tellus sollicitudin mauris.</p>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review</a>
-							</div>
-
 						</li>
 					 </ul>
 				</section>
@@ -183,26 +161,25 @@
 				<!-- Pagination -->
 				<div class="clearfix"></div>
 				<div class="row">
-					<div class="col-md-12">
-						<!-- Pagination -->
-						<div class="pagination-container margin-top-30">
-							<nav class="pagination">
-								<ul>
-									<li><a href="#" class="current-page">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
-								</ul>
-							</nav>
-						</div>
+				<div class="col-md-12">
+					<div class="pagination-container margin-top-20 margin-bottom-40">
+						<nav class="pagination">
+							<ul>
+								<li v-show="currentPageIndex>=2" @click="handleGetComments(currentPageIndex-1)"><a href="#"><i class="sl sl-icon-arrow-left"></i></a></li>
+								<li v-for="n in totalPage" :key="n" @click="handleGetComments(n)"><a href="#" :class="{'current-page': n===currentPageIndex}">{{ n }}</a></li>
+								<li v-show="currentPageIndex<totalPage" @click="handleGetComments(currentPageIndex+1)"><a href="#"><i class="sl sl-icon-arrow-right"></i></a></li>
+							</ul>
+						</nav>
 					</div>
 				</div>
-				<div class="clearfix"></div>
+			</div>
+			<div class="clearfix"></div>
 				<!-- Pagination / End -->
 			</div>
 
 
 			<!-- Add Review Box -->
-			<div id="add-review" class="add-review-box">
+			<div v-if="userDetail.email" id="add-review" class="add-review-box">
 
 				<!-- Add Review -->
 				<h3 class="listing-desc-headline margin-bottom-10">Add Review</h3>
@@ -307,24 +284,24 @@
 				<!-- Subratings Container / End -->
 
 				<!-- Review Comment -->
-				<form id="add-comment" class="add-comment">
+				<form id="add-comment" class="add-comment" @submit.prevent="handleSubmitComment">
 					<fieldset>
 
 						<div class="row">
 							<div class="col-md-6">
 								<label>Name:</label>
-								<input type="text" value=""/>
+								<input type="text" v-model="userDetail.fullName" disabled/>
 							</div>
 								
 							<div class="col-md-6">
 								<label>Email:</label>
-								<input type="text" value=""/>
+								<input type="text" v-model="userDetail.email" disabled/>
 							</div>
 						</div>
 
 						<div>
 							<label>Review:</label>
-							<textarea cols="40" rows="3"></textarea>
+							<textarea cols="40" rows="3" v-model="comment.content"></textarea>
 						</div>
 
 					</fieldset>
@@ -423,16 +400,41 @@
 
 <script lang="js">
 import { createNamespacedHelpers } from 'vuex'
+import ThePaging from '../components/ThePaging.vue' 
 const {mapState,mapActions } = createNamespacedHelpers('moduleRoom')
+const { mapState: mapStateModuleUser} = createNamespacedHelpers('moduleUser')
+const { mapState: mapStateModuleComment, mapActions: mapActionsModuleComment} = createNamespacedHelpers('moduleComment')
 export default {
+	components:{
+		ThePaging
+	},
+
+	data() {
+		return {
+			roomId:'',
+			currentPageIndex: 1
+		}
+	},
+
 	created() {
-		const roomId = this.$route.params.roomId;
-		this.getRoomByIdAction(roomId)
+		this.roomId = this.$route.params.roomId;
+		this.getRoomByIdAction(this.roomId)
+		this.getCommentPagingAction({roomId: this.roomId})
 	},
 
 	computed: {
 		...mapState({
 			roomDetail: state => state.roomDetail,
+		}),
+
+		...mapStateModuleUser({
+			userDetail: state => state.userDetail,
+		}),
+
+		...mapStateModuleComment({
+			comment: state => state.comment,
+			comments: state => state.dataComment.listData,
+			totalPage: state => state.dataComment.totalPage
 		}),
 	},
 
@@ -440,6 +442,38 @@ export default {
 		...mapActions({
 			getRoomByIdAction: 'getRoomByIdAction',
 		}),
+
+		...mapActionsModuleComment({
+			createCommentAction: 'createCommentAction',
+			getCommentPagingAction: 'getCommentPagingAction'
+		}),
+
+		handleSubmitComment(){
+			this.comment.userId = this.userDetail.id
+			this.comment.roomId = this.roomDetail.id
+			this.createCommentAction(this.comment)
+		},
+
+		formatDate(date){
+			if (date){
+				const date = new Date(date)
+				let day = date.getDate();
+				day = day < 10 ? `0${day}` : day
+				let month = date.getMonth();
+				month = month < 10 ? `0${month}` : month
+				let year = date.getFullYear();
+				return `${day}/${month}/${year}`
+			}
+			else return ''
+		},
+		
+		handleGetComments(pageIndex){
+			this.currentPageIndex = pageIndex
+			this.getCommentPagingAction({
+				roomId:this.roomId,
+				pageIndex: pageIndex
+			})
+		}
 	},
 
 }
