@@ -4,7 +4,7 @@
       <div class="notification__title">
         <h4>{{ notificationTitle }}</h4>
       </div>
-      <span>x</span>
+      <span @click="handleClose">x</span>
     </div>
     <div class="notification__content">
      {{ notificationContent }}

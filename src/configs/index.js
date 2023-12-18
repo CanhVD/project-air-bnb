@@ -3,5 +3,5 @@ export default {
   tokenByClass:
     '',
   baseUrl: 'https://localhost:44356',
-  urlLocal: 'http://localhost:8080/'
+  urlLocal: 'http://localhost:8081/'
 }

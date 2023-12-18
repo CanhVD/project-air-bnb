@@ -148,11 +148,11 @@
 							<div v-if="comment.user.avatar" class="avatar"><img :src="comment.user.avatar" alt="" /></div>
 							<div v-else class="avatar"><img src="http://www.gravatar.com/avatar/00000000000000000000000000000000?d=mm&amp;s=70" alt="" /></div>
 							<div class="comment-content"><div class="arrow-comment"></div>
-								<div class="comment-by">{{ comment.user.fullName }} <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">{{comment.createDate}}</span>
+								<div class="comment-by">{{ comment.user.fullName }} <i class="tip" data-tip-content="Person who left this review actually was a customer"></i> <span class="date">{{formatDate(comment.createDate)}}</span>
 									<div class="star-rating" data-rating="5"></div>
 								</div>
 								<p>{{comment.content}}</p>
-								<a href="#" class="rate-review"><i class="sl sl-icon-like"></i> Helpful Review <span>{{comment.like}}</span></a>
+								<a href="#" class="rate-review" @click="handleLikeComment(comment)"><i class="sl sl-icon-like"></i> Helpful Review <span>{{comment.like}}</span></a>
 							</div>
 						</li>
 					 </ul>
@@ -445,7 +445,8 @@ export default {
 
 		...mapActionsModuleComment({
 			createCommentAction: 'createCommentAction',
-			getCommentPagingAction: 'getCommentPagingAction'
+			getCommentPagingAction: 'getCommentPagingAction',
+			increaseLikeAction: 'increaseLikeAction'
 		}),
 
 		handleSubmitComment(){
@@ -473,7 +474,18 @@ export default {
 				roomId:this.roomId,
 				pageIndex: pageIndex
 			})
-		}
+		},
+
+		handleLikeComment(comment){
+			this.increaseLikeAction(comment.id),
+			comment.like++
+		},
+
+		formatDate(dateString) {
+      const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+      const date = new Date(dateString);
+      return date.toLocaleDateString('vi-VN', options);
+    },
 	},
 
 }

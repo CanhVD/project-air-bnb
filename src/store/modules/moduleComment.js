@@ -1,5 +1,6 @@
 import { addComment } from '../../api/commentAPI'
 import { getCommentPaging } from '../../api/commentAPI'
+import { increaseLike } from '../../api/commentAPI'
 
 const state = () => ({
   comment: {},
@@ -22,6 +23,7 @@ const actions = {
       await addComment(comment)
       alert("Bình luận thành công")
       context.commit('setCommentMutation')
+      context.dispatch('getCommentPagingAction', { roomId: comment.roomId })
     } catch (error) {
       console.log(error)
       alert("Bình luận thất bại")
@@ -32,6 +34,14 @@ const actions = {
     try {
       const dataComment = await getCommentPaging(roomId, pageSize, pageIndex)
       context.commit('setListCommentMutation', dataComment)
+    } catch (error) {
+      alert(error)
+    }
+  },
+
+  async increaseLikeAction(context, commentId) {
+    try {
+      await increaseLike(commentId)
     } catch (error) {
       alert(error)
     }

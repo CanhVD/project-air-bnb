@@ -82,9 +82,7 @@ const actions = {
       const res = await putChangeProfile(changeProfile)
       alert("Thay đổi thông tin thành công")
       context.commit("setUserDetailMutation", res)
-      console.log(res)
     } catch (error) {
-      console.log(error)
       alert("Thay đổi thông tin thất bại")
     }
   }
